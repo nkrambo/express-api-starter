@@ -15,7 +15,7 @@
     "rollback": "knex migrate:rollback --knexfile src/knexfile.js",
     "make:seeder": "knex seed:make --knexfile src/knexfile.js",
     "make:migration": "knex migrate:make --knexfile src/knexfile.js",
-    "test": "",
+    "test": "jest",
     "prettify": "prettier --single-quote --print-width 120 --write \"src/**/*.js\" \"test/**/*.js\"",
     "start:dev": "nodemon --watch .env --watch src --exec babel-node src --source-maps"
   },
