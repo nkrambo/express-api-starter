@@ -1,0 +1,32 @@
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# IntelliJ IDE
+.idea
+
+# Build directory
+dist
+
+# Dotenv configuration
+.env
+
+# Visual Studio Code
+.vscode
+
+# Tests
+coverage
+
+# Vim swp files
+*.swp
