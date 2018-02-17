@@ -3,8 +3,8 @@ import validate from '../utils/validate';
 import * as todoService from '../services/todoService';
 
 const SCHEMA = {
-  name: Joi.string()
-    .label('Name')
+  title: Joi.string()
+    .label('Title')
     .max(90)
     .required()
 };

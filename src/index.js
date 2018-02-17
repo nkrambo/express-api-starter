@@ -44,8 +44,11 @@ app.use('/api', routes);
 app.use(errorHandler.genericErrorHandler);
 app.use(errorHandler.methodNotAllowed);
 
-app.listen(app.get('port'), app.get('host'), () => {
-  logger.log('info', `Server started at http://${app.get('host')}:${app.get('port')}`);
-});
+// In a test environment, we run server through Supertest, do not have the app listen on a network port.
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(app.get('port'), app.get('host'), () => {
+    logger.log('info', `Server started at http://${app.get('host')}:${app.get('port')}`);
+  });
+}
 
 export default app;

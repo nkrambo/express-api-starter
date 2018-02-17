@@ -1,24 +1,17 @@
-import request from 'supertest';
 import app from '../../src/index';
 import bookshelf from '../../src/db';
+import request from 'supertest';
 
 /**
  * Tests for '/api/todos'
  */
 describe('todos Controller Test', () => {
-  // before(done => {
-  //   bookshelf
-  //     .knex('todos')
-  //     .truncate()
-  //     .then(() => done());
-  // });
-
-  // beforeAll(done => {
-  //   bookshelf
-  //     .knex('todos')
-  //     .truncate()
-  //     .then(() => done());
-  // });
+  beforeAll(done => {
+    bookshelf
+      .knex('todos')
+      .truncate()
+      .then(() => done());
+  });
 
   test('should return list of todos', async () => {
     const response = await request(app).get('/api/todos');
@@ -29,14 +22,25 @@ describe('todos Controller Test', () => {
     //   .end((err, res) => {
     //     expect(res.statusCode).toEqual(200);
     //     // expect(res.body.data).to.be.an('array');
-    //     expect(res.body.data).toHaveLength(0);
-    //
-    //     done();
+    //     // expect(res.body.data).toHaveLength(0);
+    //     // done();
     //   });
-
+    //
     // expect(true).toBeTruthy();
     // return request(app).get('/').expect(200);
   });
+
+  // test('another', async () => {
+  //   const response = await request(app).get('/api/todos');
+  //   expect(response.statusCode).toBe(200);
+  // });
+
+  // test('should return API version and title for the app', async () => {
+  //   const response = await request(app).get('/api');
+  //   expect(response.statusCode).toBe(200);
+  //   expect(response.body.app).toBe(app.locals.title);
+  //   expect(response.body.apiVersion).toBe(app.locals.version);
+  // });
 
   // test('should not create a new todo if title is not provided', done => {
   //   let todo = {
