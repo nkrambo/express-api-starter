@@ -5,7 +5,7 @@ import request from 'supertest';
 /**
  * Tests for '/api/todos'
  */
-describe('todos Controller Test', () => {
+describe('Todos Controller Test', () => {
   beforeAll(done => {
     bookshelf
       .knex('todos')
@@ -13,194 +13,134 @@ describe('todos Controller Test', () => {
       .then(() => done());
   });
 
+  // GET - /api/todos
   test('should return list of todos', async () => {
     const response = await request(app).get('/api/todos');
     expect(response.statusCode).toBe(200);
-
-    // request(app)
-    //   .get('/api/todos')
-    //   .end((err, res) => {
-    //     expect(res.statusCode).toEqual(200);
-    //     // expect(res.body.data).to.be.an('array');
-    //     // expect(res.body.data).toHaveLength(0);
-    //     // done();
-    //   });
-    //
-    // expect(true).toBeTruthy();
-    // return request(app).get('/').expect(200);
+    expect(response.body.data).toHaveLength(0);
   });
 
-  // test('another', async () => {
-  //   const response = await request(app).get('/api/todos');
-  //   expect(response.statusCode).toBe(200);
-  // });
+  // POST (BAD REQUEST) - /api/todos
+  test('should not create a new todo if title is not provided', async () => {
+    const todo = {
+      noTitle: 'Jane Doe'
+    };
 
-  // test('should return API version and title for the app', async () => {
-  //   const response = await request(app).get('/api');
-  //   expect(response.statusCode).toBe(200);
-  //   expect(response.body.app).toBe(app.locals.title);
-  //   expect(response.body.apiVersion).toBe(app.locals.version);
-  // });
+    const response = await request(app)
+      .post('/api/todos')
+      .send(todo);
 
-  // test('should not create a new todo if title is not provided', done => {
-  //   let todo = {
-  //     notitle: 'Jane Doe'
-  //   };
-  //
-  //   request(app)
-  //     .post('/api/todos')
-  //     .send(todo)
-  //     .end((err, res) => {
-  //       let { code, message, details } = res.body.error;
-  //
-  //       expect(res.statusCode).to.be.equal(400);
-  //       expect(code).to.be.equal(400);
-  //       expect(message).to.be.equal('Bad Request');
-  //       expect(details).to.be.an('array');
-  //       expect(details[0]).to.have.property('message');
-  //       expect(details[0]).to.have.property('param', 'title');
-  //
-  //       done();
-  //     });
-  // });
-  //
-  // test('should create a new todo with valid data', done => {
-  //   let todo = {
-  //     title: 'Jane Doe'
-  //   };
-  //
-  //   request(app)
-  //     .post('/api/todos')
-  //     .send(todo)
-  //     .end((err, res) => {
-  //       let { data } = res.body;
-  //
-  //       expect(res.statusCode).to.be.equal(201);
-  //       expect(data).to.be.an('object');
-  //       expect(data).to.have.property('id');
-  //       expect(data).to.have.property('title');
-  //       expect(data).to.have.property('createdAt');
-  //       expect(data).to.have.property('updatedAt');
-  //       expect(data.title).to.be.equal(todo.title);
-  //
-  //       done();
-  //     });
-  // });
-  //
-  // test('should get information of todo', done => {
-  //   request(app)
-  //     .get('/api/todos/1')
-  //     .end((err, res) => {
-  //       let { data } = res.body;
-  //
-  //       expect(res.statusCode).to.be.equal(200);
-  //       expect(data).to.be.an('object');
-  //       expect(data).to.have.property('id');
-  //       expect(data).to.have.property('title');
-  //       expect(data).to.have.property('createdAt');
-  //       expect(data).to.have.property('updatedAt');
-  //
-  //       done();
-  //     });
-  // });
-  //
-  // test('should respond with not found error if random todo id is provided', done => {
-  //   request(app)
-  //     .get('/api/todos/1991')
-  //     .end((err, res) => {
-  //       let { code, message } = res.body.error;
-  //
-  //       expect(res.statusCode).to.be.equal(404);
-  //       expect(code).to.be.equal(404);
-  //       expect(message).to.be.equal('todo not found');
-  //
-  //       done();
-  //     });
-  // });
-  //
-  // test('should update a todo if title is provided', done => {
-  //   let todo = {
-  //     title: 'John Doe'
-  //   };
-  //
-  //   request(app)
-  //     .put('/api/todos/1')
-  //     .send(todo)
-  //     .end((err, res) => {
-  //       let { data } = res.body;
-  //
-  //       expect(res.statusCode).to.be.equal(200);
-  //       expect(data).to.be.an('object');
-  //       expect(data).to.have.property('id');
-  //       expect(data).to.have.property('title');
-  //       expect(data).to.have.property('createdAt');
-  //       expect(data).to.have.property('updatedAt');
-  //       expect(data.title).to.be.equal(todo.title);
-  //
-  //       done();
-  //     });
-  // });
-  //
-  // test('should not update a todo if title is not provided', done => {
-  //   let todo = {
-  //     notitle: 'John Doe'
-  //   };
-  //
-  //   request(app)
-  //     .put('/api/todos/1')
-  //     .send(todo)
-  //     .end((err, res) => {
-  //       let { code, message, details } = res.body.error;
-  //
-  //       expect(res.statusCode).to.be.equal(400);
-  //       expect(code).to.be.equal(400);
-  //       expect(message).to.be.equal('Bad Request');
-  //       expect(details).to.be.an('array');
-  //       expect(details[0]).to.have.property('message');
-  //       expect(details[0]).to.have.property('param', 'title');
-  //
-  //       done();
-  //     });
-  // });
-  //
-  // test('should delete a todo if valid id is provided', done => {
-  //   request(app)
-  //     .delete('/api/todos/1')
-  //     .end((err, res) => {
-  //       expect(res.statusCode).to.be.equal(204);
-  //
-  //       done();
-  //     });
-  // });
-  //
-  // test('should respond with not found error if random todo id is provided for deletion', done => {
-  //   request(app)
-  //     .delete('/api/todos/1991')
-  //     .end((err, res) => {
-  //       let { code, message } = res.body.error;
-  //
-  //       expect(res.statusCode).to.be.equal(404);
-  //       expect(code).to.be.equal(404);
-  //       expect(message).to.be.equal('todo not found');
-  //
-  //       done();
-  //     });
-  // });
-  //
-  // test('should respond with bad request for empty JSON in request body', done => {
-  //   let todo = {};
-  //
-  //   request(app)
-  //     .post('/api/todos')
-  //     .send(todo)
-  //     .end((err, res) => {
-  //       let { code, message } = res.body.error;
-  //
-  //       expect(res.statusCode).to.be.equal(400);
-  //       expect(code).to.be.equal(400);
-  //       expect(message).to.be.equal('Empty JSON');
-  //
-  //       done();
-  //     });
-  // });
+    const { code, message, details } = response.body.error;
+
+    expect(response.statusCode).toBe(400);
+    expect(code).toBe(400);
+    expect(message).toBe('Bad Request');
+    expect(details[0]).toHaveProperty('message');
+    expect(details[0]).toHaveProperty('param', 'title');
+  });
+
+  // POST - /api/todos
+  test('should create a new todo with valid data', async () => {
+    let todo = {
+      title: 'Jane Doe'
+    };
+
+    const response = await request(app)
+      .post('/api/todos')
+      .send(todo);
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.data).toHaveProperty('id');
+    expect(response.body.data).toHaveProperty('title', todo.title);
+    expect(response.body.data).toHaveProperty('createdAt');
+    expect(response.body.data).toHaveProperty('updatedAt');
+  });
+
+  // GET - /api/todos/1
+  test('should get information of todo', async () => {
+    const response = await request(app).get('/api/todos/1');
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.data).toHaveProperty('id');
+    expect(response.body.data).toHaveProperty('title');
+    expect(response.body.data).toHaveProperty('createdAt');
+    expect(response.body.data).toHaveProperty('updatedAt');
+  });
+
+  // GET - /api/todos/1984
+  test('should respond with not found error if random todo id is provided', async () => {
+    const response = await request(app).get('/api/todos/1984');
+    let { code, message } = response.body.error;
+
+    expect(response.statusCode).toBe(404);
+    expect(code).toBe(404);
+    expect(message).toBe('To do not found');
+  });
+
+  // PUT - /api/todos/1
+  test('should update a todo if title is provided', async () => {
+    const todo = {
+      title: 'John Doe'
+    };
+
+    const response = await request(app)
+      .put('/api/todos/1')
+      .send(todo);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.data).toHaveProperty('id');
+    expect(response.body.data).toHaveProperty('title', todo.title);
+    expect(response.body.data).toHaveProperty('createdAt');
+    expect(response.body.data).toHaveProperty('updatedAt');
+  });
+
+  // PUT (BAD REQUEST) - /api/todos/1
+  test('should not update a todo if title is not provided', async () => {
+    let todo = {
+      notitle: 'John Doe'
+    };
+
+    const response = await request(app)
+      .put('/api/todos/1')
+      .send(todo);
+
+    const { code, message, details } = response.body.error;
+
+    expect(response.statusCode).toBe(400);
+    expect(code).toBe(400);
+    expect(message).toBe('Bad Request');
+    expect(details[0]).toHaveProperty('message');
+    expect(details[0]).toHaveProperty('param', 'title');
+  });
+
+  // DELETE - /api/todos/1
+  test('should delete a todo if valid id is provided', async () => {
+    const response = await request(app).delete('/api/todos/1');
+    expect(response.statusCode).toBe(204);
+  });
+
+  // DELETE (BAD REQUEST) - /api/todos/1984
+  test('should respond with not found error if random todo id is provided for deletion', async () => {
+    const response = await request(app).delete('/api/todos/1984');
+    const { code, message } = response.body.error;
+
+    expect(response.statusCode).toBe(404);
+    expect(code).toBe(404);
+    expect(message).toBe('To do not found');
+  });
+
+  // POST (BAD REQUEST) - /api/todos
+  test('should respond with bad request for empty JSON in request body', async () => {
+    let todo = {};
+
+    const response = await request(app)
+      .post('/api/todos')
+      .send(todo);
+
+    const { code, message } = response.body.error;
+
+    expect(response.statusCode).toBe(400);
+    expect(code).toBe(400);
+    expect(message).toBe('Empty JSON');
+  });
 });

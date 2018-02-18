@@ -19,7 +19,7 @@ export function getAllTodos() {
 export function getTodo(id) {
   return new Todo({ id }).fetch().then(todo => {
     if (!todo) {
-      throw new Boom.notFound('To do not found');
+      throw Boom.notFound('To do not found');
     }
 
     return todo;

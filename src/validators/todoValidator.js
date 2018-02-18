@@ -33,7 +33,7 @@ function todoValidator(req, res, next) {
  */
 function findTodo(req, res, next) {
   return todoService
-    .getUser(req.params.id)
+    .getTodo(req.params.id)
     .then(() => next())
     .catch(err => next(err));
 }
